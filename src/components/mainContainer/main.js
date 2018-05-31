@@ -8,6 +8,7 @@ import config from '../../config/index'
 import http from '../../helper/http'
 import Login from '../admin'
 import Profile from '../profile'
+import Pageloader from '../../shared/pageloader/pageloader'
 
 class Main extends Component {
   constructor (props) {
@@ -23,7 +24,8 @@ class Main extends Component {
         aboutme: null
       },
       first: false,
-      redirect: []
+      redirect: [],
+      code: undefined
     }
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
     this.handleLogoutSuccess = this.handleLogoutSuccess.bind(this)
@@ -75,14 +77,24 @@ class Main extends Component {
     this.setState({redirect: array})
   }
 
+  componentWillMount () {
+    let codeToken = window.location.href.split('=')[1]
+    if (codeToken) {
+      this.setState({
+        code: codeToken
+      })
+    }
+  }
+
   render () {
     const {isLoggedin, profile, first, redirect} = this.state
     return (
       <BrowserRouter>
         <div>
-          <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess}
+          <Header path='/' isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess}
             onLogoutSuccess={this.handleLogoutSuccess} profile={profile} handleFirst={this.handleFirst} first={first}
             handleRedirect={this.handleRedirect} />
+
           <Switch>
             <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} />} />
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
@@ -92,6 +104,7 @@ class Main extends Component {
             <Route exact path='/create' component={CreateEvent} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} onLoginSuccess={this.handleLoginSuccess}
               isLoggedin={isLoggedin} profile={profile} first={first} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} />} />
+            <Route exact path='/' component={Pageloader} />
           </Switch>
         </div>
       </BrowserRouter>

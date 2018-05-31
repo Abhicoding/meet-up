@@ -41,10 +41,10 @@ app.post('/api/event/create', event.create)
 
 app.get('/create', (req, res, next) => {
   // if (!req.session.email) {
-  //   res.redirect('/')
-  // } else {
-  next()
-  // }
+  res.redirect('/')
+  // // } else {
+  // next()
+  // // }
 })
 
 // API call for user details
@@ -55,6 +55,13 @@ app.post('/api/user/login', user.login)
 
 // API call for user logout
 app.get('/logout', user.logout)
+
+// test url
+app.get('/githubauth/', (req, res) => {
+  // console.log(req.query.code)
+  // res.query.code = req.query.code
+  res.redirect('/')
+})
 
 // to render UI...always place it at the bottom
 app.get('*', (req, res) => {
