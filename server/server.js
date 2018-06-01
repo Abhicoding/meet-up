@@ -1,4 +1,5 @@
 const express = require('express')
+const http = require('http')
 const bodyParser = require('body-parser')
 // const session = require('express-session')
 const path = require('path')
@@ -39,13 +40,13 @@ app.delete('/api/event/comment', comment.deleteComment)
 // API call to create an event
 app.post('/api/event/create', event.create)
 
-app.get('/create', (req, res, next) => {
-  // if (!req.session.email) {
-  res.redirect('/')
-  // // } else {
-  // next()
-  // // }
-})
+// app.get('/create', (req, res, next) => {
+//   // if (!req.session.email) {
+//   res.redirect('/')
+//   // // } else {
+//   // next()
+//   // // }
+// })
 
 // API call for user details
 app.post('/api/user/get', user.getUserInfo)
@@ -57,16 +58,44 @@ app.post('/api/user/login', user.login)
 app.get('/logout', user.logout)
 
 // test url
-app.get('/githubauth/', (req, res) => {
-  // console.log(req.query.code)
-  // res.query.code = req.query.code
-  res.redirect('/')
-})
+// app.get('/githubauth', (req, res) => {
+//   console.log(req.query.code)
+//   let code = req.query.code
+//   console.log(code)
+//   var options = {
+//     host: 'https://github.com/login/oauth/access_token',
+//     port: 80,
+//     // path: '/login/oauth/access_token',
+//     method: 'POST',
+//     client_id: '5a57bd199dea74e2f36f',
+//     client_secret: 'e25b1ef5bb2a79f67af742656b788a84e50104a8',
+//     code
+//   }
 
-// to render UI...always place it at the bottom
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../build/index.html`))
-})
+//   var request = http.request(options, function (res) {
+//     console.log('STATUS: ' + res.statusCode)
+//     console.log('HEADERS: ' + JSON.stringify(res.headers))
+//     res.setEncoding('utf8')
+//     res.on('data', function (chunk) {
+//       console.log('BODY: ' + chunk)
+//     })
+//   })
+
+//   request.on('error', function (e) {
+//     console.log('problem with request: ' + e.message)
+//   })
+
+//   // write data to request body
+//   request.write('data\n')
+//   request.write('data\n')
+//   request.end()
+
+// })
+
+// // to render UI...always place it at the bottom
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(`${__dirname}/../build/index.html`))
+// })
 
 app.listen(PORT, function () {
   console.log('Example app listening on port ', PORT)

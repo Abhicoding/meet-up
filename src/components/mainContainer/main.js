@@ -77,15 +77,6 @@ class Main extends Component {
     this.setState({redirect: array})
   }
 
-  componentWillMount () {
-    let codeToken = window.location.href.split('=')[1]
-    if (codeToken) {
-      this.setState({
-        code: codeToken
-      })
-    }
-  }
-
   render () {
     const {isLoggedin, profile, first, redirect} = this.state
     return (
